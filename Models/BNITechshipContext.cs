@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace AlphaAuthService.Models
 {
-    public partial class BNITechshipContext : IdentityDbContext<IdentityModel>
+    public partial class BNITechshipContext : IdentityDbContext<ApplicationUser>
     {
         public BNITechshipContext()
         {
