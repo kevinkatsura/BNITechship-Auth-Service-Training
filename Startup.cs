@@ -43,7 +43,7 @@ namespace AlphaAuthService
 
             // DATABASE REGISTRATION
             services.AddDbContext<BNITechshipContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddIdentity<IdentityModel, IdentityRole>(options => {
+            services.AddIdentity<ApplicationUser, IdentityRole>(options => {
                 options.Password.RequiredLength = 8;
                 options.Password.RequireLowercase = true;
                 options.Password.RequireUppercase = true;
@@ -75,7 +75,7 @@ namespace AlphaAuthService
                };
            });
 
-            services.AddScoped<IUser, UserData>();
+            services.AddScoped<IUser, JwtAuthenticationManager>();
 
         }
 

@@ -1,5 +1,6 @@
 ﻿using AlphaAuthService.Data;
 using AlphaAuthService.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -34,7 +35,7 @@ namespace AlphaAuthService.Controllers
                 return BadRequest(e.Message);
             }
         }
-
+        
         [HttpPost("Authentication")]
         public async Task<IActionResult> Authentication([FromBody] User userParam)
         {
@@ -42,6 +43,20 @@ namespace AlphaAuthService.Controllers
             if (user == null)
                 return BadRequest("Username/Password incorrect");
             return Ok(user);
+        }
+
+        [Authorize]
+        [HttpGet("UpdatePassword")]
+        public async Task<IActionResult> UpdatePassword([FromBody] ChangePasswordModel user) {
+            try
+            {
+                await _user.UpdatePassword(User.Identity.Name, user.CurrentPassword, user.NewPassword, user.ConfirmNewPassword);
+                return Ok("Password berhasil diupdate.");
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         /*        // GET: api/<UsersController>
